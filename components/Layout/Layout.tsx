@@ -8,7 +8,7 @@ interface props {
 const Layout: FC<props> = ({ children }) => {
   return (
     <>
-      <div className="w-full bg-orange-500 uppercase">
+      <div className="w-full bg-slate-300 text-black uppercase">
         <Navbar />
       </div>
 

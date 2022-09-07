@@ -1,32 +1,24 @@
-import Button from "@components/common/button/Button";
-import CryptoTable from "@components/common/cryptotable/CryptoTable";
-import SearchInput from "@components/common/searchInput/SearchInput";
-import { getMarketsCoins } from "helpers/config";
+import { Button, CryptoTable, SearchInput } from "@components/common";
+import useGetMarketsCoin from "hooks/useGetMarketsCoin";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { useState } from "react";
-import { getApi } from "services/getCryptoApi";
-import useSWR from "swr";
 
 const Home: NextPage = () => {
-  const { data, error } = useSWR(getMarketsCoins, getApi);
+  const { marketsCoin } = useGetMarketsCoin();
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
 
-  const router = useRouter();
-  const { coins } = router.query;
-
   const filteredData: any = () => {
-    if (search.length === 0) return data?.slice(page, page + 10);
+    if (search.length === 0) return marketsCoin?.slice(page, page + 10);
 
-    const filtered = data.filter((item) =>
+    const filtered = marketsCoin.filter((item) =>
       item.id.toLowerCase().includes(search.toLowerCase())
     );
     return filtered.slice(page, page + 10);
   };
 
   const nextPage = () => {
-    if (data[page]) {
+    if (marketsCoin[page]) {
       setPage((current) => current + 10);
     }
   };
@@ -37,7 +29,7 @@ const Home: NextPage = () => {
     }
   };
 
-  if (!data) return <h1>Cargando</h1>;
+  if (!marketsCoin) return <h1>Cargando</h1>;
 
   return (
     <div className="w-full mt-10">
