@@ -1,8 +1,17 @@
 import Link from "next/link";
-import React from "react";
 
 const CryptoTable = ({ data, index }) => {
   const { id, image, name, current_price, price_change_24h } = data;
+
+  let priceChange = price_change_24h.toString().includes("-");
+
+  const changeColor = () => {
+    if (priceChange) {
+      return "red";
+    } else {
+      return "green";
+    }
+  };
 
   return (
     <tr key={id} className="bg-indigo-50 shadow p-4 m-1 font-semibold">
@@ -16,7 +25,9 @@ const CryptoTable = ({ data, index }) => {
         </div>
       </td>
       <td>{current_price}</td>
-      <td>{price_change_24h}</td>
+      <td>
+        <h1 className={`${changeColor()}`}>{price_change_24h}</h1>
+      </td>
     </tr>
   );
 };

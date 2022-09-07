@@ -1,5 +1,3 @@
-import { getIdConfig } from "utils/getId.util";
-
 const NAME = "coingecko";
 const BASE = `api.${NAME}.com`;
 export const URL = `https://${BASE}/api/v3/coins`;
@@ -9,8 +7,12 @@ export const getMarketsCoins = () => {
   return url;
 };
 
-export const getIdCoins = (id: string, currency, days = 1) => {
+export const getIdCoins: any = (id: string, currency: string, days = 1) => {
   const url = `${URL}/${id}/market_chart?vs_currency=${currency}&days=${days}`;
-  console.log(url);
+  return url;
+};
+
+export const getCoin = (id) => {
+  const url = `${URL}/${id}`;
   return url;
 };

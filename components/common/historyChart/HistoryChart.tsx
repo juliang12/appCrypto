@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import DescriptionCoin from "@components/common/DescriptionCoin/DescriptionCoin";
 import {
   Chart as Chartjs,
   CategoryScale,
@@ -12,7 +12,7 @@ import {
   Tooltip,
   PointElement,
 } from "chart.js";
-import { historyOptions } from "chartconfig/chartConfig";
+import useGetCoins from "hooks/useGetCoins";
 import { Line } from "react-chartjs-2";
 
 Chartjs.register(
@@ -27,12 +27,20 @@ Chartjs.register(
   Title,
   Tooltip
 );
-const HistoryChart = ({ data }) => {
+const HistoryChart = () => {
+  const { cryptoData } = useGetCoins();
+
+  if (!cryptoData) return null;
+
+  const { prices } = cryptoData;
   return (
-    <div>
+    <div className="w-full justify-between max-w-7xl m-auto">
+      <div>
+        <DescriptionCoin />
+      </div>
       <Line
         data={{
-          labels: data?.prices.map((coin) => {
+          labels: prices.map((coin) => {
             let date = new Date(coin[0]);
             let time =
               date.getHours() > 12
@@ -42,7 +50,7 @@ const HistoryChart = ({ data }) => {
           }),
           datasets: [
             {
-              data: data?.prices.map((coin) => coin[1]),
+              data: prices.map((coin) => coin[1]),
               borderColor: "#312e81",
             },
           ],
