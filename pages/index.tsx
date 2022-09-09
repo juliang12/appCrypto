@@ -48,7 +48,7 @@ const Home: NextPage = () => {
         </thead>
         <tbody className="text-center ">
           {filteredData()?.map((item, index) => (
-            <CryptoTable data={item} index={index} />
+            <CryptoTable key={index} data={item} index={index} />
           ))}
         </tbody>
       </table>

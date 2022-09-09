@@ -2,7 +2,7 @@ import Navbar from "@components/navbar/Navbar";
 import React, { FC, ReactNode } from "react";
 
 interface props {
-  children: ReactNode;
+  children: ReactNode | ReactNode[];
 }
 
 const Layout: FC<props> = ({ children }) => {
