@@ -1,6 +1,30 @@
-import React, { FC } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { connector } from "config/web3";
+import React, { FC, ReactNode, useCallback, useEffect } from "react";
 
-const Navbar: FC = () => {
+interface Props {
+  children?: ReactNode | ReactNode[];
+}
+
+const Navbar: FC<Props> = () => {
+  const { activate, active, deactivate, account } = useWeb3React();
+
+  const connect = useCallback(() => {
+    activate(connector);
+    localStorage.setItem("previouslyConnected", "true");
+  }, [activate]);
+
+  useEffect(() => {
+    if (localStorage.getItem("previouslyConnected") === "true") {
+      return connect();
+    }
+  }, [connect]);
+
+  const disconnect = () => {
+    deactivate();
+    localStorage.removeItem("previouslyConnected");
+  };
+
   return (
     <nav className="w-full h-14 flex items-center justify-between bg-slate-300 text-black max-w-7xl m-auto">
       <div className="logo">
@@ -25,9 +49,24 @@ const Navbar: FC = () => {
           </a>
         </li>
       </ul>
-      <button className="bg-indigo-600 hover:bg-zinc-600 text-zinc-200 font-semibold hover:text-white py-2 px-10 border border-zinc-800 hover:border-transparent rounded">
-        Login
-      </button>
+
+      {active ? (
+        <>
+          <button
+            onClick={disconnect}
+            className="bg-indigo-600 hover:bg-zinc-600 text-zinc-200 font-semibold hover:text-white py-2 px-10 border border-zinc-800 hover:border-transparent rounded"
+          >
+            Disconnect
+          </button>
+        </>
+      ) : (
+        <button
+          onClick={connect}
+          className="bg-indigo-600 hover:bg-zinc-600 text-zinc-200 font-semibold hover:text-white py-2 px-10 border border-zinc-800 hover:border-transparent rounded"
+        >
+          Connect
+        </button>
+      )}
     </nav>
   );
 };
