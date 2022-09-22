@@ -2,12 +2,16 @@ import { getMarketsCoins } from "helpers/config";
 import { getApi } from "services/getCryptoApi";
 import useSWR from "swr";
 
-const useGetMarketsCoin = () => {
-  const { data, error } = useSWR(getMarketsCoins, getApi);
+const url = getMarketsCoins();
 
-  const marketsCoin = data;
+const useGetMarketsCoin = () => {
+  const { data: marketsCoin, isValidating, error } = useSWR(url, getApi);
+
+  const isLoading = !marketsCoin && isValidating;
+
   return {
     marketsCoin,
+    isLoading,
     error,
   };
 };
