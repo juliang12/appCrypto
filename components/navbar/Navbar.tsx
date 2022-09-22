@@ -26,26 +26,22 @@ const Navbar: FC<Props> = () => {
   };
 
   return (
-    <nav className="w-full h-14 flex items-center justify-between bg-slate-300 text-black max-w-7xl m-auto">
+    <nav className="w-full h-20 flex items-center justify-between bg-zinc-900 text-accents-6 leading-6 text-white max-w-7xl m-auto">
       <div className="logo">
-        <h1 className="font-bold uppercase text-lg text-indigo-700">
-          CyptoApp
-        </h1>
+        <h1 className="text-2xl font-bold text-pink-600">CyptoApp</h1>
       </div>
-      <ul className="flex items-center text-black font-semibold ">
+      <ul className="flex items-center text-white font-semibold  ">
         <li className="p-5">
-          <a className="hover:text-orange-300" href="">
+          <a className="font-medium transition hover:text-slate-500" href="/">
             Home
           </a>
         </li>
         <li className="p-5">
-          <a className="hover:text-orange-300" href="">
-            Contact
-          </a>
-        </li>
-        <li className="p-5">
-          <a className="hover:text-orange-300" href="">
-            Market
+          <a
+            className="font-medium transition hover:text-slate-500"
+            href="/new-coins"
+          >
+            New Coins
           </a>
         </li>
       </ul>
@@ -54,7 +50,7 @@ const Navbar: FC<Props> = () => {
         <>
           <button
             onClick={disconnect}
-            className="bg-indigo-600 hover:bg-zinc-600 text-zinc-200 font-semibold hover:text-white py-2 px-10 border border-zinc-800 hover:border-transparent rounded"
+            className="bg-pink-600 hover:bg-zinc-600 text-zinc-200 font-semibold hover:text-white py-2 px-10 border border-zinc-800 hover:border-transparent rounded"
           >
             Disconnect
           </button>
@@ -62,9 +58,9 @@ const Navbar: FC<Props> = () => {
       ) : (
         <button
           onClick={connect}
-          className="bg-indigo-600 hover:bg-zinc-600 text-zinc-200 font-semibold hover:text-white py-2 px-10 border border-zinc-800 hover:border-transparent rounded"
+          className="bg-pink-600 hover:bg-zinc-600 text-zinc-200 font-semibold hover:text-white py-2 px-10 border border-zinc-800 hover:border-transparent rounded"
         >
-          Connect
+          Connect Wallet
         </button>
       )}
     </nav>

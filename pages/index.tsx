@@ -1,12 +1,28 @@
 import { Button, CryptoTable, SearchInput } from "@components/common";
+import Skeleton from "@components/skeletons/Skeleton";
 import useGetMarketsCoin from "hooks/useGetMarketsCoin";
 import type { NextPage } from "next";
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useWeb3React } from "@web3-react/core";
+import TableTitle from "@components/common/tableTitle/TableTitle";
+import { useRouter } from "next/router";
+import styles from "styles";
 
 const Home: NextPage = () => {
-  const { marketsCoin } = useGetMarketsCoin();
+  const { active, account } = useWeb3React();
+  const router = useRouter();
+  const { marketsCoin, isLoading } = useGetMarketsCoin();
   const [page, setPage] = useState(0);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (!marketsCoin) {
+      <div className="flex justify-center text-center mt-10 font-poppins">
+        <Skeleton />
+      </div>;
+    }
+  }, [marketsCoin]);
 
   const filteredData: any = () => {
     if (search.length === 0) return marketsCoin?.slice(page, page + 10);
@@ -28,30 +44,38 @@ const Home: NextPage = () => {
       setPage((current) => current - 10);
     }
   };
-
-  if (!marketsCoin) return <h1>Cargando</h1>;
+  // useEffect(() => {
+  //   if (!localStorage.getItem("previouslyConnected")) {
+  //     router.push("/login");
+  //   }
+  // }, [account]);
 
   return (
-    <div className="w-full mt-10">
-      <div className="flex justify-center m-5">
+    <div className={styles.container}>
+      <div className="text-center">
+        {active ? (
+          <h1 className="font-bold text-lg">Account: {account}</h1>
+        ) : null}
+      </div>
+      <div className="flex justify-center p-10">
         <SearchInput search={search} setSearch={setSearch} />
       </div>
-      <table className="w-full max-w-7xl m-auto pt-1em pb-0.5  stripe shadow-2x1 hover">
-        <thead className="bg-indigo-500 font-[Roboto] bg-opacity-100 text-white ">
-          <tr className="text-center">
-            <th className="py-3">ID</th>
-            <th>Image</th>
-            <th className="py-3">Name</th>
-            <th className="py-3">Price Current</th>
-            <th className="py-3">Price change 24h</th>
-          </tr>
-        </thead>
-        <tbody className="text-center ">
+
+      <motion.table
+        key={page}
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-7xl m-auto pt-1em pb-0.5  stripe shadow-2x1 hover"
+      >
+        <TableTitle />
+        <tbody className="text-center">
           {filteredData()?.map((item, index) => (
             <CryptoTable key={index} data={item} index={index} />
           ))}
         </tbody>
-      </table>
+      </motion.table>
+
       <div className="flex items-center justify-center">
         <Button onClick={nextPage}>Next</Button>
         <Button onClick={backPage}>Back</Button>

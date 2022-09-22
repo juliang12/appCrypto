@@ -1,5 +1,8 @@
+import Footer from "@components/footer/Footer";
 import Navbar from "@components/navbar/Navbar";
-import React, { FC, ReactNode } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { useRouter } from "next/router";
+import React, { FC, ReactNode, useEffect } from "react";
 
 interface props {
   children: ReactNode | ReactNode[];
@@ -7,13 +10,16 @@ interface props {
 
 const Layout: FC<props> = ({ children }) => {
   return (
-    <>
-      <div className="w-full bg-slate-300 text-black uppercase">
+    <div>
+      <div className="w-full bg-zinc-900 text-white uppercase">
         <Navbar />
       </div>
 
-      <div>{children}</div>
-    </>
+      <div className="min-h-screen bg-zinc-900 pt-10">{children}</div>
+      <div>
+        <Footer />
+      </div>
+    </div>
   );
 };
 

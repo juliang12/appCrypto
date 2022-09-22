@@ -9,7 +9,7 @@ const DescriptionCoin = () => {
   const { name, image, market_data } = coinData;
 
   return (
-    <div className="h-20 flex m-3 bg-slate-200 p-1">
+    <div className="h-20 flex m-3 bg-zinc-800 p-1">
       <div className="w-full font-semibold flex gap-3 items-center justify-center">
         <h1 className="text-xl">{name}</h1>
         <img src={image.small} alt="" />
