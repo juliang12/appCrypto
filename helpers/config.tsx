@@ -1,4 +1,4 @@
-const name = process.env.NEXT_PUBLIC_NAME_URL;
+const name = process.env.NEXT_PUBLIC_URL;
 console.log(name);
 
 export const getMarketsCoins = () => {
