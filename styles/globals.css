@@ -75,3 +75,64 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.navbar-container{
+  width: 100%;
+  max-width: 1280px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.nav-ul{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.icon{
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+  .icon{
+    display: block;
+    fill: white;
+  }
+
+  .icon-styles{
+    fill: white;
+    color: #18b2de;
+  }
+
+
+  .nav-ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 70px;
+    left: -100%;
+    opacity: 1;
+    transition: all 0.5s ease;
+    font-size: 40px;
+  }
+
+  .nav-ul.active{
+    background-color: #27272a;
+    height: 120vh;
+    top: 70px;
+    left: 0;
+    opacity: 1;
+    transition: all 0.5s ease;
+    z-index: 1;
+  }
+  
+}
