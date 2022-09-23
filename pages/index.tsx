@@ -60,22 +60,22 @@ const Home: NextPage = () => {
       <div className="flex justify-center p-10">
         <SearchInput search={search} setSearch={setSearch} />
       </div>
-
-      <motion.table
-        key={page}
-        initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-7xl m-auto pt-1em pb-0.5  stripe shadow-2x1 hover"
-      >
-        <TableTitle />
-        <tbody className="text-center">
-          {filteredData()?.map((item, index) => (
-            <CryptoTable key={index} data={item} index={index} />
-          ))}
-        </tbody>
-      </motion.table>
-
+      <div className="overflow-x">
+        <motion.table
+          key={page}
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-7xl m-auto pt-1em pb-0.5  stripe shadow-2x1 hover table-auto overflow-scroll"
+        >
+          <TableTitle />
+          <tbody className="text-center">
+            {filteredData()?.map((item, index) => (
+              <CryptoTable key={index} data={item} index={index} />
+            ))}
+          </tbody>
+        </motion.table>
+      </div>
       <div className="flex items-center justify-center">
         <Button onClick={nextPage}>Next</Button>
         <Button onClick={backPage}>Back</Button>

@@ -6,7 +6,7 @@ const LoginForm = () => {
   return (
     <div className={styles.container}>
       <h1 className="font-bold font-poppins uppercase text-white text-center pt-10">
-        Connect to enter App
+        Please connect your wallet
       </h1>
       <div className={styles.exchangeBoxWrapper}>
         <div className="p-1 bg-gradient-to-tr from-pink-600 to-blue-600 rounded">

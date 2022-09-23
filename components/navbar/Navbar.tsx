@@ -1,6 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
 import { connector } from "config/web3";
-import React, { FC, ReactNode, useCallback, useEffect } from "react";
+import Image from "next/image";
+import React, { FC, ReactNode, useCallback, useEffect, useState } from "react";
+import Bars from "../../assets/icons/bars-solid.svg";
 
 interface Props {
   children?: ReactNode | ReactNode[];
@@ -8,6 +10,7 @@ interface Props {
 
 const Navbar: FC<Props> = () => {
   const { activate, active, deactivate, account } = useWeb3React();
+  const [hidde, setHidde] = useState(false);
 
   const connect = useCallback(() => {
     activate(connector);
@@ -25,27 +28,38 @@ const Navbar: FC<Props> = () => {
     localStorage.removeItem("previouslyConnected");
   };
 
+  const closeMovileMenu = () => {
+    setHidde(false);
+  };
+
   return (
-    <nav className="w-full h-20 flex items-center justify-between bg-zinc-900 text-accents-6 leading-6 text-white max-w-7xl m-auto">
+    <nav className="navbar-container">
       <div className="logo">
         <h1 className="text-2xl font-bold text-pink-600">CyptoApp</h1>
       </div>
-      <ul className="flex items-center text-white font-semibold  ">
+      <div className="icon" onClick={() => setHidde(!hidde)}>
+        <Image className="icon-styles" src={Bars} width={35} height={35} />
+      </div>
+      <ul className={hidde ? "nav-ul active" : "nav-ul"}>
         <li className="p-5">
-          <a className="font-medium transition hover:text-slate-500" href="/">
+          <a
+            className="font-medium transition hover:text-slate-500"
+            onClick={() => closeMovileMenu}
+            href="/"
+          >
             Home
           </a>
         </li>
         <li className="p-5">
           <a
             className="font-medium transition hover:text-slate-500"
+            onClick={() => closeMovileMenu}
             href="/new-coins"
           >
             New Coins
           </a>
         </li>
       </ul>
-
       {active ? (
         <>
           <button
